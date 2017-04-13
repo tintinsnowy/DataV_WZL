@@ -5,9 +5,8 @@ var table;
 var len_table;
 function preload() {
   table = loadTable("try.csv","csv", "header");
-  
-
 }
+
 function setup() {
   createCanvas(
     window.innerWidth,
@@ -15,12 +14,13 @@ function setup() {
   );
   background(0);
   
-  len_table= table.getRowCount();    
+  len_table= table.getRowCount();
+    print(len_table);
   var x = 0;
   for (var i = 0; i <len_table; i++) {
-    var stream = new Stream();
-  
-    stream.generateSymbols(x, random(-1000, 0),table.getRow(i).getString(0),table.getRow(i).getString(1));
+    var stream = new Stream();   
+    stream.generateSymbols(x, random(-1000, 0),table.getRow(i).getString(1),table.getRow(i).getString(0)[0]);
+      //print(table.getRow(i).getString(0)[0]);
     streams.push(stream);
     x += symbolSize
   }
@@ -31,12 +31,13 @@ function setup() {
 
 function draw() {
   background(0, 150);
+    var i=0;
   streams.forEach(function(stream) {
     stream.render();
   });
 }
 
-function Symbol(x, y, speed,value,rate) {
+function Symbol(x, y, speed,value,rate) {//,rate
   this.x = x;
   this.y = y;
   this.value=value;
@@ -54,10 +55,10 @@ function Symbol(x, y, speed,value,rate) {
 function Stream() {
   this.symbols = [];
   this.totalSymbols ;
-  this.speed = random(5, 55);
+  this.speed = random(15, 125);
     
-  this.generateSymbols = function(x, y, rate,str) {
-    this.totalSymbols=str.length;
+  this.generateSymbols = function(x, y, str,rate) {//rate,
+    this.totalSymbols= str.length;
     var len =this.totalSymbols;
     for (var i =0; i < len; i++) {
       symbol = new Symbol(
@@ -75,8 +76,7 @@ function Stream() {
 
   this.render = function() {
       this.symbols.forEach(function(symbol) {
-          print(symbol.rate);
-
+          //print(symbol.rate);
         if(symbol.rate=='1')
          fill(0,  0, 240);
         else if(symbol.rate=='3')
