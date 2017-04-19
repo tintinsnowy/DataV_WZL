@@ -1,5 +1,5 @@
 var streams = [];
-var fadeInterval = 1.6;
+var fadeInterval = 0.6;
 var symbolSize = 18;
 var table;
 var len_table;
@@ -29,6 +29,8 @@ function setup() {
 
   textFont('Consolas');
   textSize(symbolSize);
+ //noStroke();
+  //noLoop();  // Run once and stop
 }
 
 function draw() {
@@ -50,7 +52,7 @@ function Symbol(x, y, speed,value,rate,opacity) {//,rate
   this.switchInterval = round(random(2, 25));
 
   this.rain = function() {
-    this.y += 0.7*this.speed;
+    this.y += this.speed;
   }
 
 }
@@ -58,7 +60,7 @@ function Symbol(x, y, speed,value,rate,opacity) {//,rate
 function Stream() {
   this.symbols = [];
   this.totalSymbols ;
-  this.speed = random(45, 125);
+  this.speed = random(5, 25);
     
   this.generateSymbols = function(x, y, str,rate) {//rate,
     this.totalSymbols= str.length;
@@ -81,16 +83,20 @@ function Stream() {
   }
 
   this.render = function() {
+        
       this.symbols.forEach(function(symbol) {
           //print(symbol.rate);
-        if(symbol.rate=='1')
-         fill(152, 245, 255,symbol.opacity);
-        else if(symbol.rate=='3')
-          fill(140, 255, 170,symbol.opacity);
-        else 
-          fill(255, 106, 106,symbol.opacity);
-      text(symbol.value, symbol.x, symbol.y);
-      symbol.rain();
+        if(symbol.y>=0&&symbol.y<=window.innerHeight){
+          if(symbol.rate=='1')
+            fill(152, 245, 255,symbol.opacity);
+          else if(symbol.rate=='3')
+            fill(140, 255, 170,symbol.opacity);
+          else 
+            fill(255, 106, 106,symbol.opacity);
+      
+          text(symbol.value, symbol.x, symbol.y);
+          }
+       symbol.rain();
      // symbol.setToRandomSymbol();
     });
   }

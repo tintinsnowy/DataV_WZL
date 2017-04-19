@@ -13,3 +13,6 @@
 [0413/121702.833:ERROR:process_info.cc(625)] range at 0x5074299000000000, size 0x1de fully unreadable
 [0413/121702.835:ERROR:process_info.cc(625)] range at 0x507429b000000000, size 0x1de fully unreadable
 [0413/121702.835:ERROR:process_info.cc(625)] range at 0x0, size 0x1de fully unreadable
+[0419/151107.972:ERROR:process_info.cc(625)] range at 0xffdc299000000000, size 0x1c0 fully unreadable
+[0419/151107.973:ERROR:process_info.cc(625)] range at 0xffdc29b000000000, size 0x1c0 fully unreadable
+[0419/151107.973:ERROR:process_info.cc(625)] range at 0x0, size 0x1c0 fully unreadable
