@@ -1,11 +1,14 @@
 var streams = [];
 var fadeInterval = 0.6;
 var symbolSize = 18;
-var table;
-var len_table;
+var table1;
+var len_table1;
+var Step=1;
+var pg1;// the sketches for the rainfalls.
+var pg2;// the sketches
 
 function preload() {
-  table = loadTable("try.csv","csv", "header");
+  table1 = loadTable("try.csv","csv", "header");
 }
 
 function setup() {
@@ -13,92 +16,45 @@ function setup() {
     window.innerWidth,
     window.innerHeight
   );
-  background(0);
-  
-  len_table= table.getRowCount();
+  pg1 = createGraphics(window.innerWidth,window.innerHeight);
+  pg2 = createGraphics(window.innerWidth,window.innerHeight);
+
+// the rainfall of words
+  len_table1= table1.getRowCount();
   var x = 0;
   var y = random(-1000,0);
-  for (var i = 0; i <len_table; i++) {
+  for (var i = 0; i <len_table1; i++) {
     var stream = new Stream();   
-    stream.generateSymbols(x, y, table.getRow(i).getString(1),table.getRow(i).getString(0)[0]);
+    stream.generateSymbols(x, y, table1.getRow(i).getString(1),table1.getRow(i).getString(0)[0]);
       //print(table.getRow(i).getString(0)[0]);
     streams.push(stream);
     x += symbolSize;
     if(x>window.innerWidth) {x=0; y +=  (-window.innerWidth+random(-1000,0));}
-  }
-
-  textFont('Consolas');
-  textSize(symbolSize);
- //noStroke();
-  //noLoop();  // Run once and stop
+  }    
+  pg1.textFont('Consolas');
+  pg1.textSize(symbolSize);
+  /* end of the rainfall part*/
+    
+  /* start of the pie part*/
+  
+    
+  /* end of the pie part*/
 }
 
 function draw() {
-  background(0, 150);
-    var i=0;
-  streams.forEach(function(stream) {
-    stream.render();
-  });
-}
-
-function Symbol(x, y, speed,value,rate,opacity) {//,rate
-  this.x = x;
-  this.y = y;
-  this.value=value;
-  this.rate = rate;
-  this.speed = speed; 
- this.opacity = opacity;
-
-  this.switchInterval = round(random(2, 25));
-
-  this.rain = function() {
-    this.y += this.speed;
-  }
-
-}
-
-function Stream() {
-  this.symbols = [];
-  this.totalSymbols ;
-  this.speed = random(5, 25);
     
-  this.generateSymbols = function(x, y, str,rate) {//rate,
-    this.totalSymbols= str.length;
-    var len =this.totalSymbols;
-    var opacity = 255;
-
-    for (var i =0; i < len; i++) {
-      symbol = new Symbol(
-        x,
-        y,
-        this.speed,
-          str[i],
-          rate,
-          opacity
-      );
-      this.symbols.push(symbol);
-      opacity -= (255 / this.totalSymbols) / fadeInterval;
-      y -= symbolSize;
+    // the first screen
+    if (Step==1){
+        drawRainFall();
+        image(pg1,0,0);
+        var strs = streams[streams.length-1];
+        var last = strs.symbols;
+        if(last[last.length-1].y > window.innerWidth)
+            Step =2;
     }
-  }
-
-  this.render = function() {
-        
-      this.symbols.forEach(function(symbol) {
-          //print(symbol.rate);
-        if(symbol.y>=0&&symbol.y<=window.innerHeight){
-          if(symbol.rate=='1')
-            fill(152, 245, 255,symbol.opacity);
-          else if(symbol.rate=='3')
-            fill(140, 255, 170,symbol.opacity);
-          else 
-            fill(255, 106, 106,symbol.opacity);
-      
-          text(symbol.value, symbol.x, symbol.y);
-          }
-       symbol.rain();
-     // symbol.setToRandomSymbol();
-    });
-  }
+    else if(Step==2){
+        pg2.background(0,150);
+        drawPieChart();
+        image(pg2,0,0);
+    }
 }
-
