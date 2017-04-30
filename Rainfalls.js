@@ -1,7 +1,7 @@
 
 function drawRainFall(){
-     pg1.background(0, 150);
-    streams.forEach(function(stream) {
+     background(0, 150);
+     streams.forEach(function(stream) {
     stream.render();
 });  
 }
@@ -52,13 +52,13 @@ function Stream() {
           //print(symbol.rate);
         if(symbol.y>=0&&symbol.y<=window.innerHeight){
           if(symbol.rate=='1')
-            pg1.fill(152, 245, 255,symbol.opacity);
+            fill(152, 245, 255,symbol.opacity);
           else if(symbol.rate=='3')
-            pg1.fill(140, 250, 170,symbol.opacity);
+            fill(140, 250, 170,symbol.opacity);
           else 
-            pg1.fill(255, 106, 106,symbol.opacity);
+            fill(255, 106, 106,symbol.opacity);
       
-          pg1.text(symbol.value, symbol.x, symbol.y);
+            text(symbol.value, symbol.x, symbol.y);
           }
        symbol.rain();
      // symbol.setToRandomSymbol();

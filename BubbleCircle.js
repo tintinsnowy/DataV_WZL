@@ -41,9 +41,8 @@ function pieChart(diameter, data,last) {
   for (var i = 0; i < data.length; i++) {
     fill(rgb[i*3],rgb[i*3+1],rgb[i*3+2]);
     noStroke();
-    if(i==3) scale(1.5);
-    if(i==4) scale(1/1.5);
     arc(x, y, diameter+data[i], diameter+data[i], last, last+radians(data[i]),PIE);
     last += radians(data[i]);
   }
 }
+ 
