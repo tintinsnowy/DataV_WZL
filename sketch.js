@@ -45,8 +45,8 @@ function setup() {
   /* start of the pie part*/
   circle_x = window.innerWidth/2;
   circle_y = window.innerHeight/2;
-    
   /* end of the pie part*/
+    
 }
 
 function draw() {
