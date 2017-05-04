@@ -1,22 +1,37 @@
 var StepPie = 1;
+var pieR = 1;
+var lastAngle = 0;
+var ti=0;
 function drawPie() {
     //image(pg2,0,0);
     background(50,150);
     ellipseMode(RADIUS);  // Set ellipseMode to RADIUS
-    var pie = new pieChart();
-    if(StepPie==1)
-        pie.pieAppear(30,angles,4);  // Draw white ellipse using RADIUS mode   
-    else if(StepPie == 2)
+    var pie = new pieChart(0);
+    if(StepPie==1){
+        var r = pie.pieAppear(30,angles,4);  // Draw white ellipse using RADIUS mode
+		    pieR = r*pieR;
+		    pieR+=1;
+		if( pieR == 4){
+			StepPie = 2;
+			pieTime(5);
+		}
+	}
+    else if(StepPie == 2){
+		 lastAngle+=0.01;
+		 pie.pieDis(30,angles,4, lastAngle);
+		 if((ti-0.0)<0.001) Step =3;
+	}
         
     ellipseMode(CENTER);  // Set ellipseMode to CENTER
     fill(50,255);  // Set fill to gray
     ellipse(circle_x/ti, circle_y/ti, 20, 20);  // Draw gray ellipse using CENTER mode
- 
+     
 }
 
 function pieChart() {
     this.last = 0;
-    
+    this.round = 0;
+	
     this.pieAppear = function(diameter, data,idShow){
         if(ti<1.60)
         ti += 0.01;
@@ -33,12 +48,13 @@ function pieChart() {
                 translate(15*cos((2*this.last+radians(data[i]))/2), 15*sin((2*this.last+radians(data[i]))/2));
                 arc(circle_x/ti,circle_y/ti, diameter+data[i], diameter+data[i], this.last, this.last+radians(data[i]),PIE);
                 translate(-15*cos((2*this.last+radians(data[i]))/2), -15*sin((2*this.last+radians(data[i]))/2));
-                
+           		this.round = 1;
             }else
             {arc(circle_x/ti, circle_y/ti, diameter+data[i], diameter+data[i], this.last, this.last+radians(data[i]),PIE);}
             this.last += radians(data[i]);
         }
-    }
+		return  this.round;
+	}
     
     this.setLine = function(idShow) {   
         strokeWeight(2.0);
@@ -72,20 +88,28 @@ function pieChart() {
             x = int(x/10);
         }
         fill(rgb[idShow*3],rgb[idShow*3+1],rgb[idShow*3+2],(ti*255));
-        pieTime(1);
+		
     }
     
     // Start to disappear
-    this.pieDis = function(){
-        
+    this.pieDis = function(diameter, data, idShow, last){
+        if(ti>0.0)
+        ti -= 0.01;
+        scale(ti);
+
+        for (var i = 0; i < data.length; i++) {
+
+            fill(rgb[i*3],rgb[i*3+1],rgb[i*3+2],(ti*255));
+            noStroke();
+            arc(circle_x/ti, circle_y/ti, diameter+data[i], diameter+data[i], last, last+radians(data[i]),PIE);
+            last += radians(data[i]);
+        }
+
     }
 }
 
-funtion pieTime(seconds){
-    var m = minute();
-    while(minute==int(m+2)%60){
-        pie.pieDis();
-        
+function pieTime(seconds){
+    var m = second();
+    while(second() != int(m+seconds)%60){
     }
-    
 }

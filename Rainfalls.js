@@ -51,7 +51,8 @@ function Stream() {
       this.symbols.forEach(function(symbol) {
           //print(symbol.rate);
         if(symbol.y>=0&&symbol.y<=window.innerHeight){
-          if(symbol.rate=='1')
+          
+		  if(symbol.rate=='1')
             fill(152, 245, 255,symbol.opacity);
           else if(symbol.rate=='3')
             fill(140, 250, 170,symbol.opacity);
