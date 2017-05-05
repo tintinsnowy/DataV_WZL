@@ -75,16 +75,16 @@ function pieChart() {
 
     this.pieNum = function(idShow, tem_x, tem_y){
         //noStroke();
-        fill(180,50,129,150);
+        fill(220,150,129,150);
         noStroke();
         var x = angles[idShow];
         var i = 0;
         while(x>0){
             var  num = int(x%10);
             //rect(tem_x - 35-i, tem_y, 10, 10);//x, y, w, h
-            textSize(18);
-            text(num, tem_x-18-i, tem_y+9);
-            i += 15; 
+            textSize(16);
+            text(num, tem_x-10-i, tem_y+5);
+            i += 8; 
             x = int(x/10);
         }
         fill(rgb[idShow*3],rgb[idShow*3+1],rgb[idShow*3+2],(ti*255));
