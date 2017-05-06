@@ -64,3 +64,6 @@ function draw() {
 		drawBar(bar);
 	}
 }
+function windowResized() {
+  resizeCanvas(window.innerWidth, window.innerHeight);
+}
