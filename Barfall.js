@@ -5,7 +5,7 @@ var circleSpeed =5;
 var circlesList=[];
 function drawBar(bar) {
     //image(pg2,0,0);
-    background(50,150);
+    background(0,150);
     //fill(212,28,172);
     if(barStep == 1 ){
        bar.upGrid();
@@ -13,7 +13,7 @@ function drawBar(bar) {
        barStep =2;
     }
     else if(barStep ==2){
-        pieTime(1);
+        pieTime(2);
         barStep =3;
     }
 	else if(barStep == 3){
@@ -76,11 +76,15 @@ function Fibar(){
 			// positive 
 			var rowNum = int(listB[1]/3);
             var aim = yNum-30;
-            //print(rowNum);
+            //print(rowNum);d
             for (var i = 1; i<= int(listB[0]/3)+int(listB[1]/3); i++){
 				for (var j = 1; j<4; j++,++order){
 					if( i <= rowNum){
+                        push();
+                        fill(0, 204, 102);
+                        //noStroke();
 						circleFall(circlesList[order], yNum+5+i*5);
+                        pop();
 					}
 					else{
 						fill(255); 
@@ -89,13 +93,11 @@ function Fibar(){
                             aim -= 5;
 					}                                
 				}  
-            //print();
-			}//end of for
+			}//end of for 1
 			id++;
-			
 		} //end of while  
-		// the following	
 	}
+    
 }
 
 function circles(x,y,r,sx,sy){

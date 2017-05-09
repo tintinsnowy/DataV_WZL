@@ -3,7 +3,7 @@ var fadeInterval = 0.6;
 var symbolSize = 18;
 var table1;
 var len_table1;
-var Step = 3;
+var Step =1;
 var circle_x;
 var circle_y;
 var outsideRadius = 150;

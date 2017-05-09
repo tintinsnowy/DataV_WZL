@@ -4,7 +4,7 @@ var lastAngle = 0;
 var ti=0;
 function drawPie() {
     //image(pg2,0,0);
-    background(50,150);
+    background(0,150);
     ellipseMode(RADIUS);  // Set ellipseMode to RADIUS
     var pie = new pieChart(0);
     if(StepPie==1){
@@ -23,7 +23,7 @@ function drawPie() {
 	}
         
     ellipseMode(CENTER);  // Set ellipseMode to CENTER
-    fill(50,255);  // Set fill to gray
+    fill(0,250);  // Set fill to gray
     ellipse(circle_x/ti, circle_y/ti, 20, 20);  // Draw gray ellipse using CENTER mode
      
 }
