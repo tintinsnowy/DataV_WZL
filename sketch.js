@@ -3,7 +3,7 @@ var fadeInterval = 0.6;
 var symbolSize = 18;
 var table1;
 var len_table1;
-var Step =1;
+var Step =2;
 var circle_x;
 var circle_y;
 var outsideRadius = 150;
@@ -11,9 +11,13 @@ var insideRadius = 100;
 var angles = [30, 13, 45, 35, 65, 105, 67];
 var rgb=[204, 255, 255, 255, 150, 153, 204, 1, 18, 255, 204, 217,153, 255, 255,242, 242, 166,153, 204, 255];
 var reviewB = [[5,50],[10,70],[15,75],[70,20],[80,5]];
+var reviewUp = [["schlecht"],["great"]];
+var reviewRate = 4;
 var bar;
+var img2;
 function preload() {
   table1 = loadTable("try.csv","csv", "header");
+  img2 = loadImage("Bild2.png");
 }
 
 function setup() {
