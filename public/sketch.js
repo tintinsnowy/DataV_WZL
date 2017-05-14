@@ -17,9 +17,9 @@ var reviewRate = 4;
 var bar;
 var img2;
 function preload() {
-  table1 = loadTable("try.csv","csv", "header");
+  //table1 = loadTable("try.csv","csv", "header");
+  table1 = loadJSON("rain.json");
   img2 = loadImage("Bild2.png");
-  //table2 = loadTable("http://127.0.0.1:3306/AWK_Products_Comments.txt_de_TOKENS");
 }
 
 function setup() {
@@ -27,22 +27,8 @@ function setup() {
     window.innerWidth,
     window.innerHeight
   );
-  //var _sql = "select author from AWK_Products_Comments.txt_de_TOKENS";
-  print(connectSetup());
-  //print(resultQuery[0]);
-  len_table1= table1.getRowCount();
-  var x = 0;
-  var y = random(-1000,0);
-  for (var i = 0; i <len_table1; i++) {
-    var stream = new Stream();   
-    stream.generateSymbols(x, y, table1.getRow(i).getString(1),table1.getRow(i).getString(0)[0]);
-      //print(table.getRow(i).getString(0)[0]);
-    streams.push(stream);
-    x += symbolSize;
-    if(x>window.innerWidth) {x=0; y +=  (-window.innerWidth+random(-1000,0));}
-  }    
-  textFont('Consolas');
-  textSize(symbolSize);
+  /* start to process the json file*/
+  rainData();
   /* end of the rainfall part*/
     
   /* start of the pie part*/
