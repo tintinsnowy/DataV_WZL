@@ -11,12 +11,12 @@ function rainData(){
    var x = 0;
    var y = random(-1000,0);
    for (var i = 0; i <len_table1; i++) {
-    var stream = new Stream();   
-    stream.generateSymbols(x, y, table1[i].comment,table1[i].rating);
-       //print
-    streams.push(stream);
-    x += symbolSize*5;
-    if(x>window.innerWidth) {x=0; y +=  (-window.innerWidth+random(-1000,0));}
+        var stream = new Stream();   
+        stream.generateSymbols(x, y, table1[i].comment,table1[i].rating);
+           //print
+        streams.push(stream);
+        x += symbolSize*5;
+        if( x>window.innerWidth ) {x=0; y +=  (-window.innerWidth+random(-1000,0));}
   }    
   textFont('Consolas');
   textSize(symbolSize);

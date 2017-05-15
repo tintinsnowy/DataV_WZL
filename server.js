@@ -43,7 +43,7 @@ var mysql = _mysql.createConnection({
                if(err) {
                 console.error(err);
                 } else {
-                   console.log('写入成功');
+                   console.log('Write in successfully');
                 }
             });
             //res.end();

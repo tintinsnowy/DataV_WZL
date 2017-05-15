@@ -2,24 +2,36 @@ var StepPie = 1;
 var pieR = 1;
 var lastAngle = 0;
 var ti=0;
+function piePre(){
+      angles[3] = table1.length;
+    var sumA=0
+    for (var i = 0; i<4; i++) 
+        sumA += angles[i];
+    for (var i = 0; i<4; i++) 
+    {angles[i] = int(angles[i]*360/sumA);
+    print(sumA);}
+}
 function drawPie() {
     //image(pg2,0,0);
     background(0,150);
     ellipseMode(RADIUS);  // Set ellipseMode to RADIUS
-    var pie = new pieChart(0);
+    var pie = new pieChart();
     if(StepPie==1){
-        var r = pie.pieAppear(30,angles,4);  // Draw white ellipse using RADIUS mode
+        
+        var r = pie.pieAppear(30,angles,3);  // Draw white ellipse using RADIUS mode
 		    pieR = r*pieR;
 		    pieR+=1;
 		if( pieR == 4){
 			StepPie = 2;
 			pieTime(5);
 		}
+        
 	}
     else if(StepPie == 2){
-		 lastAngle+=0.01;
-		 pie.pieDis(30,angles,4, lastAngle);
-		 if((ti-0.0)<0.001) Step =3;
+		 
+        lastAngle+=0.01;
+		pie.pieDis(30,angles,4, lastAngle);
+		if((ti-0.0)<0.001) Step =3;
 	}
         
     ellipseMode(CENTER);  // Set ellipseMode to CENTER
@@ -40,40 +52,42 @@ function pieChart() {
         for (var i = 0; i < data.length; i++) {
 
             fill(rgb[i*3],rgb[i*3+1],rgb[i*3+2],(ti*255));
-             noStroke();
+            noStroke();
             if((1.6-ti) < 0.001 && i == idShow){
-                this.setLine(idShow,ti);
                 
+                this.setLine(idShow,ti);
                 noStroke();
                 translate(15*cos((2*this.last+radians(data[i]))/2), 15*sin((2*this.last+radians(data[i]))/2));
-                arc(circle_x/ti,circle_y/ti, diameter+data[i], diameter+data[i], this.last, this.last+radians(data[i]),PIE);
+                arc(circle_x/ti,circle_y/ti, diameter+data[i]*0.9, diameter+data[i]*0.9, this.last, this.last+radians(data[i]),PIE);
                 translate(-15*cos((2*this.last+radians(data[i]))/2), -15*sin((2*this.last+radians(data[i]))/2));
            		this.round = 1;
+            
             }else
-            {arc(circle_x/ti, circle_y/ti, diameter+data[i], diameter+data[i], this.last, this.last+radians(data[i]),PIE);}
+            {arc(circle_x/ti, circle_y/ti, diameter+data[i]*0.9, diameter+data[i]*0.9, this.last, this.last+radians(data[i]),PIE);}
+            
             this.last += radians(data[i]);
         }
 		return  this.round;
 	}
     
     this.setLine = function(idShow) {   
-        strokeWeight(2.0);
+        strokeWeight(1.0);
         strokeCap(ROUND);
-        stroke(100);
-
+        stroke(80);
+        var offs;
         //beginShape(POINTS);
         var tem_x = circle_x/ti+155*cos((2*this.last+radians(angles[idShow]))/2);
         var tem_y = circle_y/ti+155*sin((2*this.last+radians(angles[idShow]))/2);
         var tem_x2 = 0;
-        if (tem_x<circle_x) tem_x2 = tem_x-50;
-        else tem_x2 = tem_x+50;
+        if (tem_x < circle_x/ti){tem_x2 = tem_x-50; offs = -20;}
+        else {tem_x2 = tem_x+50; offs = 20;}
         line(circle_x/ti,circle_y/ti,tem_x, tem_y);
         line(tem_x, tem_y,tem_x2,tem_y);
-        this.pieNum(idShow,tem_x2,tem_y);
+        this.pieNum(idShow,tem_x2,tem_y,offs);
         //endShape();      
     }
 
-    this.pieNum = function(idShow, tem_x, tem_y){
+    this.pieNum = function(idShow, tem_x, tem_y,offs){
         //noStroke();
         fill(220,150,129,150);
         noStroke();
@@ -83,7 +97,7 @@ function pieChart() {
             var  num = int(x%10);
             //rect(tem_x - 35-i, tem_y, 10, 10);//x, y, w, h
             textSize(16);
-            text(num, tem_x-10-i, tem_y+5);
+            text(num, tem_x+offs-i, tem_y+5);///!!!!!!!!!!!!!!
             i += 8; 
             x = int(x/10);
         }
@@ -101,7 +115,7 @@ function pieChart() {
 
             fill(rgb[i*3],rgb[i*3+1],rgb[i*3+2],(ti*255));
             noStroke();
-            arc(circle_x/ti, circle_y/ti, diameter+data[i], diameter+data[i], last, last+radians(data[i]),PIE);
+            arc(circle_x/ti, circle_y/ti, diameter+data[i]*0.9, diameter+data[i]*0.9, last, last+radians(data[i]),PIE);
             last += radians(data[i]);
         }
 
@@ -113,3 +127,5 @@ function pieTime(seconds){
     while(second() != int(m+seconds)%60){
     }
 }
+
+
