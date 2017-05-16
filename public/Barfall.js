@@ -4,21 +4,22 @@ var listBL = 0; //the length of list
 //var d3 = require("d3");
 var downNum = 0; //how many time has been execuated.
 var circlesList=[];
- var tx=0,ty=0,tr=0;
+var tx=0,ty=0,tr=0;
 function drawBar(bar) {
     //image(pg2,0,0);
     background(0,150);
     //fill(212,28,172);
     var node;
     var order=0;
-   
+   	bar.generateCircle();
+
     if(barStep == 1 ){
        bar.upGrid();
        //pieTime(15);
        barStep =2;
     }
     else if(barStep ==2){
-        barTime(1,bar);
+        barTime(1,bar,1);
         barStep =3;
     }
 	else if(barStep == 3){
@@ -43,9 +44,39 @@ function drawBar(bar) {
         if (ty < window.innerHeight*0.8) ty += circleSpeed;
         if (tr < 69 ) tr += circleSpeed; 
         bar.enlargeCircle(tx,ty,tr);
+        //Step = 1;
+        //print(connectSetup());
+        barStep = 5;
     }
-	bar.generateCircle();
+    else if(barStep == 5){
+        
+        barTime(8,bar,2);
+        upData();
+
+    }
 	
+}
+
+function upData(){
+    var data;
+    $(document).ready(function(){
+    $.ajax({
+            type: "get",            //使用的方式，get 还是 post
+            dataType: "text",       //使用的数据格式
+            url: "/public/Barfall",         //发送的地址
+            data: "",
+            async:false,  //very usaful configure
+            success: function(msg){  
+                data = JSON.parse(msg);
+            },error: function (msg) {
+           alert("fehler"); //错误信息
+        }
+    });
+    });
+    var stra = data[0].comment;
+    var strb = table1[0].comment;
+    if(stra.localeCompare(strb)!=0) 
+    {table1 = data;print("okay");Step = 1;}
 }
 
 function Fibar(){
@@ -76,7 +107,7 @@ function Fibar(){
     
 	this.upGrid = function(){
 		
-		textSize(12);
+		textSize(18);
 		fill(255);
         
 		for(var i  = 0; i<circlesList.length; i++){
@@ -93,12 +124,16 @@ function Fibar(){
 	this.downGrid = function(){
 		//this.upGrid();
         fill(255);
+        //textSize(12);
 		var id =0; 
         var order =0;
 		while(id<5){
             var xNum = window.innerWidth*2/5+id*30;
 			var yNum = window.innerHeight/2;
+            push();
+            fill(255);
 			text(id+1,  xNum,  yNum);
+            pop();
 			var listB = reviewB[id];
 			// positive 
 			var rowNum = int(listB[1]/3);
@@ -108,13 +143,13 @@ function Fibar(){
 				for (var j = 1; j<4; j++,++order){
 					if( i <= rowNum){
                         push();
-                        fill(0, 204, 102);
+                        fill(255, 80, 80); 
                         //noStroke();
 						circleFall(order, yNum+5+i*5);
                         pop();
 					}
 					else{
-						fill(255); 
+						fill(102, 204, 255);
                         circleFall(order, aim);
                         if(j==3)
                             aim -= 5;
@@ -131,6 +166,7 @@ function Fibar(){
     
     this.enlargeCircle = function(x,y,r){
         // firs find the circle     
+        //textSize(12);
 		for(var i  = 0; i<=listBL; i++){
             var tx = circlesList[i].x ;//* window.innerWidth/circlesList[i].sx;
             var ty = circlesList[i].y ;//* window.innerHeight/circlesList[i].sy;
@@ -139,27 +175,30 @@ function Fibar(){
             if( i <=5 && i >= 1) text(i,  xNum,  yNum);
             if(ty> yNum){
                 push();
-                fill(0, 204, 102);
+                fill(255, 80, 80);
                 ellipse(tx, ty, circlesList[i].r,circlesList[i].r);
                 pop();
-            }else
+            }else{
+                push();
+                fill(102, 204, 255);
                 ellipse(tx, ty, circlesList[i].r,circlesList[i].r);
+                pop();
+                
+                
+            }
 		}      
         //print(circlesList[50].y);
         //this.downGrid();
-        push();
-        fill(0);
-        rectMode(RADIUS);
-        rect(x,y,r/2,r/2);
-        pop();
-        push();
-        fill(255,255);
-        ellipseMode(CENTER);
-        ellipse(x,y,r,r);
-        pop();
         imageMode(CENTER);
-        image(img2, x, y,r,r);
-        text(reviewUp[0][0],  x+50,  y+50);
+        //if(table1[0].rating>=3){
+        //image(img2, x, y,r,r);
+        text("the lastest rating: "+ table1[0].rating,  tx+50,  ty+20);
+        text(table1[0].comment,  tx+50,  ty+40);   
+        //}
+    //    else{
+            text("the lastest rating: "+ table1[0].rating,  tx+50,  ty+20);
+            text(table1[0].comment,  tx+50,  ty+40);   
+        //}
     }
 }
 
@@ -176,13 +215,15 @@ function circleFall(order,aim){
     var tx = circlesList[order].x;// * window.innerWidth/c.sx;
     var ty = circlesList[order].y;// * window.innerHeight/c.sy;
 	ellipse(tx,ty, circlesList[order].r,circlesList[order].r);
-    
     // the last updatel
  
 }
-function barTime(seconds,bar){
+function barTime(seconds,bar,tag){
     var m = second();
     while(second() != int(m+seconds)%60){
-        bar.upGrid();
+        if( tag ==1)
+          bar.upGrid();
+        else if(tag ==2)
+          bar.enlargeCircle(tx,ty,tr);
     }
 }

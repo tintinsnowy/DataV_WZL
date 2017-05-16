@@ -11,6 +11,7 @@ function rainData(){
    var x = 0;
    var y = random(-1000,0);
    for (var i = 0; i <len_table1; i++) {
+        
         var stream = new Stream();   
         stream.generateSymbols(x, y, table1[i].comment,table1[i].rating);
            //print
@@ -18,7 +19,7 @@ function rainData(){
         x += symbolSize*5;
         if( x>window.innerWidth ) {x=0; y +=  (-window.innerWidth+random(-1000,0));}
   }    
-  textFont('Consolas');
+  textFont("Georgia");
   textSize(symbolSize);
 }
 
